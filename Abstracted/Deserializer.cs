@@ -1,34 +1,9 @@
 ﻿using System;
 using System.IO;
-using System.Text;
 
 namespace SeeLua.Abstracted {
-	static class StaticsData {
-		static public byte[] LuaSignature = { 27, 76, 117, 97 };
-		static public Encoding EightBit = Encoding.GetEncoding(28591);
-		
-		static public string ReadCString(this BinaryReader Stream) {
-			string Result = string.Empty;
-			int Length = Stream.ReadInt32();
-
-			if (Length != 0) { // hmmMMMMm
-				StringBuilder New = new StringBuilder(--Length);
-				byte[] Chars = Stream.ReadBytes(Length);
-				
-				for (int C = 0; C < Length; C++) {
-					New.Append((char) Chars[C]);
-				}
-
-				Stream.ReadByte(); // null terminator
-				Result = New.ToString();
-			}
-
-			return Result;
-		}
-	}
-
 	// Light-weight-ish deserializer base class
-	abstract class Deserializer {
+	abstract public class Deserializer {
 		protected BinaryReader Stream;
 		private byte[] Bytecode;
 

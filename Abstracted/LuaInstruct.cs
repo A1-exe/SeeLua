@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
-using static SeeLua.Abstracted.LuaInstruct.LuaOpType;
+using static SeeLua.Abstracted.StaticsData;
+using static SeeLua.Abstracted.StaticsData.LuaOpType;
 
 namespace SeeLua.Abstracted {
-	struct Field { // Easier handling for masks
+	internal struct Field { // Easier handling for masks
 		private uint Mask;
 		private int Offset;
 
@@ -24,19 +25,12 @@ namespace SeeLua.Abstracted {
 		}
 	}
 
-	sealed class LuaInstruct {
+	sealed public class LuaInstruct {
 		static Field I_Mask = new Field(0, 6);
 		static Field A_Mask = new Field(6, 8);
 		static Field B_Mask = new Field(23, 18);
 		static Field Bx_Mask = new Field(14, 18);
 		static Field C_Mask = new Field(14, 9);
-
-		[Flags] public enum LuaOpType : byte {
-			NOFLAG = 0,
-			OA = 1, OB = 2,
-			OBx = 4, OsBx = 8,
-			OC = 16
-		}
 
 		static LuaOpType[] Types = {
 			OA | OB, OA | OBx, OA | OB | OC, OA | OB, // move...
@@ -52,26 +46,12 @@ namespace SeeLua.Abstracted {
 			NOFLAG
 		};
 
-		public enum LuaOpcode : byte {
-			MOVE, LOADK, LOADBOOL, LOADNIL,
-			GETUPVAL, GETGLOBAL, GETTABLE,
-			SETGLOBAL, SETUPVAL, SETTABLE,
-			NEWTABLE, SELF,
-			ADD, SUB, MUL, DIV, MOD, POW,
-			UNM, NOT, LEN, CONCAT, JMP,
-			EQ, LT, LE, TEST, TESTSET,
-			CALL, TAILCALL, RETURN,
-			FORLOOP, FORPREP, TFORLOOP,
-			SETLIST, CLOSE, CLOSURE, VARARG,
-			NULL // Not a real opcode
-		}
-
 		public LuaOpType Type {
-			get => Types[(int) Op];
+			get => Types[(int) Opcode];
 		}
 
 		public uint Instr;
-		public LuaOpcode Op {
+		public LuaOpcode Opcode {
 			get {
 				LuaOpcode O = LuaOpcode.NULL;
 				byte I = (byte) I_Mask.Get(Instr);
@@ -152,7 +132,7 @@ namespace SeeLua.Abstracted {
 		}
 
 		public override string ToString() =>
-			String.Format("{0} ({1}, {2}, {3})", Op.ToString(), A, B, C);
+			String.Format("{0} ({1}, {2}, {3})", Opcode.ToString(), A, B, C);
 
 		public LuaInstruct(uint Int) {
 			Instr = Int;
@@ -160,6 +140,10 @@ namespace SeeLua.Abstracted {
 
 		public LuaInstruct(int Int) {
 			Instr = (uint) Int;
+		}
+
+		public LuaInstruct() {
+			Instr = 0;
 		}
 	}
 }

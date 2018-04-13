@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 
 namespace SeeLua.Abstracted {
-	abstract class LuaProto {
+	abstract public class LuaProto {
 		// Proto info
+		public LuaProto Parent; // Special field for testing
 		public byte[] Header; // For rebuilding chunks
 		public string Name;
 
@@ -25,6 +26,11 @@ namespace SeeLua.Abstracted {
 		public int LineEnd;
 
 		abstract public byte Version { get; }
-		virtual public byte[] Serialize() => throw new NotSupportedException("Type can not be serialized");
+		
+		// Virtual methods for descendants
+		virtual public byte[] Serialize() => throw new NotSupportedException("Can not serialize proto");
+		virtual public void StripDebug() => throw new NotSupportedException("Can not strip debug data");
+		virtual public void Cascade() => throw new NotSupportedException("Can not cascade data");
+		virtual public void Repair() => throw new NotSupportedException("Can not repair proto");
 	}
 }

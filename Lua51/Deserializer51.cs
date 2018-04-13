@@ -1,10 +1,10 @@
 ﻿using SeeLua.Abstracted;
 using System;
 using System.Collections.Generic;
-using static SeeLua.Abstracted.LuaConstant;
+using static SeeLua.Abstracted.StaticsData;
 
 namespace SeeLua.Lua51 {
-	sealed class Deserializer51 : Deserializer {
+	sealed public class Deserializer51 : Deserializer {
 		private LuaProto51 Proto;
 		
 		protected override void Assert() {

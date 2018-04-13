@@ -1,12 +1,8 @@
 ﻿using System;
+using static SeeLua.Abstracted.StaticsData;
 
 namespace SeeLua.Abstracted {
-	sealed class LuaConstant {
-		public static LuaConstant LuaNil = new LuaConstant(LuaConstantType.NIL, null);
-		public enum LuaConstantType : byte {
-			NIL, BOOL, NONE, NUMBER, STRING
-		}
-
+	sealed public class LuaConstant {
 		private object Value;
 		public LuaConstantType Type;
 

@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace SeeLua.Abstracted {
-	sealed class LuaLocal {
+	sealed public class LuaLocal {
 		public string Name;
 		public int Startpc;
 		public int Endpc;

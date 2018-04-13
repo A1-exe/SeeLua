@@ -3,7 +3,7 @@
 namespace SeeLua.Abstracted {
 	// Note that Deserializer and Serializer use different patterns
 	// in how they handle things
-	abstract class Serializer {
+	abstract public class Serializer {
 		protected List<byte> Bytecode;
 
 		abstract protected void SetHeader(LuaProto Pr);

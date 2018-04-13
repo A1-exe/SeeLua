@@ -2,9 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using static SeeLua.Abstracted.StaticsData;
 
 namespace SeeLua.Lua51 {
-	class Serializer51 : Serializer {
+	sealed public class Serializer51 : Serializer {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		private void DumpByte(byte Byte) => // I'm lazy, tell me about it
 			Bytecode.Add(Byte);
@@ -24,7 +25,7 @@ namespace SeeLua.Lua51 {
 			}
 			else {
 				DumpInt(Str.Length + 1);
-				DumpBytes(StaticsData.EightBit.GetBytes(Str));
+				DumpBytes(EightBit.GetBytes(Str));
 
 				DumpByte(0);
 			}
@@ -47,15 +48,15 @@ namespace SeeLua.Lua51 {
 				DumpByte((byte) Const.Type);
 
 				switch (Const.Type) {
-					case LuaConstant.LuaConstantType.BOOL:
+					case LuaConstantType.BOOL:
 						DumpBytes(BitConverter.GetBytes(Const.Boolean));
 
 						break;
-					case LuaConstant.LuaConstantType.NUMBER:
+					case LuaConstantType.NUMBER:
 						DumpBytes(BitConverter.GetBytes(Const.Number));
 
 						break;
-					case LuaConstant.LuaConstantType.STRING:
+					case LuaConstantType.STRING:
 						DumpString(Const.String);
 
 						break;
@@ -100,8 +101,8 @@ namespace SeeLua.Lua51 {
 		}
 
 		protected override void SetHeader(LuaProto Pr) {
-			for (int S = 0; S < StaticsData.LuaSignature.Length; S++) {
-				DumpByte(StaticsData.LuaSignature[S]);
+			for (int S = 0; S < LuaSignature.Length; S++) {
+				DumpByte(LuaSignature[S]);
 			}
 
 			DumpByte(Pr.Version);
