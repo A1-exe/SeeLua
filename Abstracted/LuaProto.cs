@@ -29,8 +29,8 @@ namespace SeeLua.Abstracted {
 		
 		// Virtual methods for descendants
 		virtual public byte[] Serialize() => throw new NotSupportedException("Can not serialize proto");
-		virtual public void StripDebug() => throw new NotSupportedException("Can not strip debug data");
-		virtual public void Cascade() => throw new NotSupportedException("Can not cascade data");
-		virtual public void Repair() => throw new NotSupportedException("Can not repair proto");
+		virtual public void StripDebug(bool Recursive) => throw new NotSupportedException("Can not strip debug data");
+		virtual public void Cascade(bool Recursive) => throw new NotSupportedException("Can not cascade data");
+		virtual public void Repair(bool Recursive) => throw new NotSupportedException("Can not repair proto");
 	}
 }

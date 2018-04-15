@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using SeeLua.Lua51;
 
 namespace SeeLua.Abstracted {
 	static public class StaticsData {
@@ -33,7 +34,7 @@ namespace SeeLua.Abstracted {
 		public enum LuaConstantType : byte {
 			NIL, BOOL, NONE, NUMBER, STRING
 		}
-
+		
 		static public string ReadCString(this BinaryReader Stream) {
 			string Result = string.Empty;
 			int Length = Stream.ReadInt32();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using SeeLua.Lua51;
 
 namespace SeeLua.Abstracted {
 	// Light-weight-ish deserializer base class
@@ -9,6 +10,28 @@ namespace SeeLua.Abstracted {
 
 		abstract protected void Assert(); // Should ensure bytecode matches
 		abstract protected LuaProto Deser(); // Should return a new proto
+
+		static public LuaProto ResolveProto(byte Version) {
+			switch (Version) {
+				case 0x51:
+					return new LuaProto51();
+				default:
+					throw new NotSupportedException("Lua version could not be resolved");
+			}
+		}
+
+		static public Deserializer Resolve(byte[] Byte) {
+			if (Byte.Length > 4) {
+				byte Version = Byte[4];
+
+				switch (Version) {
+					case 0x51:
+						return new Deserializer51(Byte);
+				}
+			}
+
+			throw new NotSupportedException("Lua version could not be resolved");
+		}
 
 		private void NewStream() {
 			MemoryStream Code = new MemoryStream(Bytecode, false);
