@@ -15,18 +15,29 @@ namespace SeeLua.Abstracted {
 			string Ret = string.Empty;
 
 			switch (Type) {
+				case LuaConstantType.NONE:
 				case LuaConstantType.NIL:
 					Ret = "nil";
 					break;
 				case LuaConstantType.BOOL:
-					Ret = Boolean.ToString();
+					Ret = Boolean.ToString().ToLower();
 					break;
 				case LuaConstantType.NUMBER:
-					Ret = Number.ToString();
+					if (Double.IsPositiveInfinity(Number)) {
+						Ret = Double.MaxValue.ToString();
+					}
+					else if (Double.IsNegativeInfinity(Number)) {
+						Ret = Double.MinValue.ToString();
+					}
+					else {
+						Ret = Number.ToString();
+					}
 					break;
 				case LuaConstantType.STRING:
 					Ret = String;
 					break;
+				default:
+					throw new InvalidOperationException("Constant type not supported");
 			}
 
 			return Ret;
