@@ -12,8 +12,8 @@ namespace SeeLua.Lua51 {
 				throw new NotSupportedException("Lua 5.1 bytecode expected");
 			}
 
-			for (int L = 0; L < LuaProto51.Signature.Length; L++) {
-				if (LuaProto51.Signature[L] != Stream.ReadByte()) {
+			for (int L = 0; L < LuaProto51.DefaultHeader.Length; L++) {
+				if (LuaProto51.DefaultHeader[L] != Stream.ReadByte()) {
 					throw new NotSupportedException("Unsupported bytecode stream");
 				}
 			}
@@ -21,7 +21,7 @@ namespace SeeLua.Lua51 {
 
 		protected override LuaProto Deser() {
 			Proto = new LuaProto51() {
-				Header = LuaProto51.Signature
+				Header = LuaProto51.DefaultHeader
 			};
 
 			ReadHeader();

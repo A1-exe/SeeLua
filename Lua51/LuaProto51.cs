@@ -3,7 +3,7 @@ using System.Text;
 
 namespace SeeLua.Lua51 {
 	sealed public class LuaProto51 : LuaProto {
-		static public byte[] Signature = { 0, 1, 4, 4, 4, 8, 0 };
+		static public byte[] DefaultHeader = { 0, 1, 4, 4, 4, 8, 0 };
 
 		public override byte Version { get => 0x51; }
 		public override byte[] Serialize() {

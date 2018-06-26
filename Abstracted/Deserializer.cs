@@ -12,12 +12,19 @@ namespace SeeLua.Abstracted {
 		abstract protected LuaProto Deser(); // Should return a new proto
 
 		static public LuaProto ResolveProto(byte Version) {
+			LuaProto Res;
+
 			switch (Version) {
 				case 0x51:
-					return new LuaProto51();
+					Res = new LuaProto51 {
+						Header = LuaProto51.DefaultHeader
+					};
+					break;
 				default:
 					throw new NotSupportedException("Lua version could not be resolved");
 			}
+
+			return Res;
 		}
 
 		static public Deserializer Resolve(byte[] Byte) {
